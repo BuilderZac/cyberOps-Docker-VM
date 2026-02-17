@@ -83,6 +83,8 @@ RUN apt-get install -y \
     tar \
     gzip \
     bzip2 \
+    mc \
+    tmux \
     tree 
 
 # Cleans apt lists
