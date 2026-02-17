@@ -15,6 +15,7 @@ RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime && \
 RUN apt-get update && \
     apt-get install -y \
     neovim \
+    lazygit \
     foremost \
     binwalk \
     steghide \
