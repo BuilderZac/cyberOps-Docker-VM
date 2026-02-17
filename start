@@ -4,4 +4,17 @@ if [ ! -d "$(pwd)/live" ]; then
     mkdir "$(pwd)/live"
 fi
 
-docker run --network=host -it --rm -v "$(pwd)/live":/workspace cyberops
+# Parse -h flag for host networking
+NETWORK_ARG=""
+while getopts "h" opt; do
+  case $opt in
+    h)
+      NETWORK_ARG="--network=host"
+      ;;
+    *)
+      ;;
+  esac
+done
+shift $((OPTIND -1))
+
+docker run $NETWORK_ARG -it --rm -v "$(pwd)/live":/workspace cyberops "$@"
