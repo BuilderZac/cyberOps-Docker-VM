@@ -1,3 +1,7 @@
 #!/bin/bash
 
+if [ ! -d "$(pwd)/live" ]; then
+    mkdir "$(pwd)/live"
+fi
+
 docker run --network=host -it --rm -v "$(pwd)/live":/workspace cyberops
