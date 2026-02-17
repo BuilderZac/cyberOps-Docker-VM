@@ -1,0 +1,8 @@
+*
+!*/
+!.gitignore
+!./start
+!./compile
+!./Dockerfile
+!./entrypoint.sh
+!./live/
