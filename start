@@ -9,7 +9,7 @@ NETWORK_ARG=""
 while getopts "h" opt; do
   case $opt in
     h)
-      NETWORK_ARG="--network=host"
+      NETWORK_ARG="--network=host --privileged"
       ;;
     *)
       ;;
