@@ -4,7 +4,8 @@ FROM kalilinux/kali-rolling
 # Update packages and install necessary tools
 RUN apt-get update && \
     apt-get install -y \
-    kali-linux-core 
+    kali-linux-core \
+    man
 
 # Set the timezone to US Eastern Time
 RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime && \
@@ -67,7 +68,8 @@ RUN apt-get install -y \
     amass \
     getallurls \
     recon-ng \
-    theharvester 
+    theharvester \
+    dnstwist 
 
 # QOL Packages
 RUN apt-get install -y \
