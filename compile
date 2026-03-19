@@ -3,5 +3,17 @@
 # Remove previous versions of 'cyberops' image
 docker images --format '{{.Repository}}:{{.Tag}} {{.ID}}' | grep "^cyberops:" | awk '{print $2}' | xargs -r docker rmi
 
+CACHE_ARG=""
+while getopts "c" opt; do
+   case $opt in
+      c)
+         CACHE_ARG="--no-cache"
+      ;;
+    *)
+      ;;
+  esac
+done
+shift $((OPTIND -1))
+
 # Build the new image
-docker build -t cyberops .
+docker build $CACHE_ARG -t cyberops .
