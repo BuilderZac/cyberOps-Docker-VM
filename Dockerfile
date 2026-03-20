@@ -113,6 +113,7 @@ RUN wget -O /usr/local/bin/slink \
 RUN mkdir /root/.config && \
     mkdir /root/.config/nvim && \
     git clone https://github.com/BuilderZac/nvim-config /root/.config/nvim/. 
+RUN nvim --headless "+Lazy! install" +qa
 
 # Install omz with config
 RUN RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
