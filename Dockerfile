@@ -89,6 +89,11 @@ RUN apt-get install -y \
     tmux \
     tree 
 
+# Special edition files
+RUN apt-get install -y \
+    nodejs \
+    npm 
+
 # Cleans apt lists
 RUN rm -rf /var/lib/apt/lists/* 
 
@@ -230,6 +235,16 @@ RUN python --version && \
     metagoofil -h >/dev/null 2>&1 || true && \
     spiderfoot -h >/dev/null 2>&1 || true && \
     theHarvester -h >/dev/null 2>&1 || true 
+
+# Special Edition juice shop
+RUN cd ~ && \
+    git clone https://github.com/juice-shop/juice-shop.git --depth 1 
+RUN cd ~/juice-shop && npm install 
+
+RUN cat > /usr/local/bin/juice << 'JUICE' && chmod +x /usr/local/bin/juice 
+#!/bin/bash
+(cd /root/juice-shop/ && npm start)
+JUICE
 
 # Set the default command to run when the container starts
 RUN touch ~/.hushlogin 
