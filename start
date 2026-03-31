@@ -17,4 +17,4 @@ while getopts "h" opt; do
 done
 shift $((OPTIND -1))
 
-docker run $NETWORK_ARG -it --rm -v "$(pwd)/live":/workspace cyberops "$@"
+docker run $NETWORK_ARG -it --rm -v "$(pwd)/live":/workspace:z cyberops "$@"
