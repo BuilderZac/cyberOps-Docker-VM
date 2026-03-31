@@ -43,6 +43,10 @@ RUN apt-get install -y \
     binwalk \
     foremost \
     binutils \
+    gdb \
+    gcc-multilib \
+    g++-multilib \
+    libc6-dev-i386 \
     scapy 
 
 # Recon Packages
@@ -88,9 +92,6 @@ RUN apt-get install -y \
     mc \
     tmux \
     tree 
-
-# Cleans apt lists
-RUN rm -rf /var/lib/apt/lists/* 
 
 # Installing EmlAnalyzer - Email Forensics  & Volatility3 - Memory Forensics
 #RUN pip3 install --upgrade pip eml-analyzer volatility3
