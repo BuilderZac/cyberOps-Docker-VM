@@ -47,6 +47,7 @@ RUN apt-get install -y \
     gcc-multilib \
     g++-multilib \
     libc6-dev-i386 \
+    libcairo2-dev \
     scapy 
 
 # Recon Packages
