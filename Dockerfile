@@ -5,7 +5,7 @@ FROM kalilinux/kali-rolling
 RUN apt-get update && \
     apt-get install -y \
     kali-linux-core \
-    man
+    man 
 
 # Set the timezone to US Eastern Time
 RUN ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime && \
@@ -23,16 +23,14 @@ RUN apt-get install -y \
     python3-pyx \
     python3-dogtail \
     python3-venv \
-    python3-lxml 
-
+    python3-lxml \
 # Installing command-line forensics tools
-RUN apt-get install -y \
     foremost \
     binwalk \
     steghide \
     hexedit \
     ghex \
-    hashcat \ 
+    hashcat \
     john \
     exiftool \
     ffmpeg \
@@ -40,18 +38,14 @@ RUN apt-get install -y \
     radare2 \
     sleuthkit \
     forensics-all \
-    binwalk \
-    foremost \
     binutils \
     gdb \
     gcc-multilib \
     g++-multilib \
     libc6-dev-i386 \
     libcairo2-dev \
-    scapy 
-
+    scapy \
 # Recon Packages
-RUN apt-get install -y \
     traceroute \
     ca-certificates \
     jq \
@@ -72,16 +66,12 @@ RUN apt-get install -y \
     httpx-toolkit \
     amass \
     getallurls \
-    recon-ng \
-    theharvester \
-    dnstwist 
-
+    dnstwist \
 # QOL Packages
-RUN apt-get install -y \
     neovim \
     vim \
     lazygit \
-    nano \ 
+    nano \
     wget \
     curl \
     grep \
@@ -92,7 +82,10 @@ RUN apt-get install -y \
     bzip2 \
     mc \
     tmux \
-    tree 
+    wordlists \
+    tree && \
+# Apt Cleanup
+    apt-get clean && rm -rf /var/lib/apt/lists/* 
 
 # Installing EmlAnalyzer - Email Forensics  & Volatility3 - Memory Forensics
 #RUN pip3 install --upgrade pip eml-analyzer volatility3
@@ -102,28 +95,27 @@ RUN cd /opt && \
     wget http://www.caesum.com/handbook/Stegsolve.jar -O stegsolve.jar && \
     chmod +x stegsolve.jar && \
     mkdir bin && \
-    mv stegsolve.jar bin/ 
-
-RUN wget -O /usr/local/bin/jsteg \
-   https://github.com/lukechampine/jsteg/releases/download/v0.3.0/jsteg-linux-amd64 && \
-   chmod +x /usr/local/bin/jsteg 
-RUN wget -O /usr/local/bin/slink \
-   https://github.com/lukechampine/jsteg/releases/download/v0.3.0/slink-linux-amd64 && \
-   chmod +x /usr/local/bin/slink 
+    mv stegsolve.jar bin/ && \
+    wget -O /usr/local/bin/jsteg \
+      https://github.com/lukechampine/jsteg/releases/download/v0.3.0/jsteg-linux-amd64 && \
+    chmod +x /usr/local/bin/jsteg && \
+    wget -O /usr/local/bin/slink \
+      https://github.com/lukechampine/jsteg/releases/download/v0.3.0/slink-linux-amd64 && \
+    chmod +x /usr/local/bin/slink 
 
 # Install nvim & load config
 RUN mkdir /root/.config && \
     mkdir /root/.config/nvim && \
-    git clone https://github.com/BuilderZac/nvim-config /root/.config/nvim/. 
-RUN nvim --headless "+Lazy! install" +qa
+    git clone https://github.com/BuilderZac/nvim-config /root/.config/nvim/. && \
+    nvim --headless "+Lazy! install" +qa 
 
 # Install omz with config
 RUN RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-RUN cp /root/.oh-my-zsh/templates/zshrc.zsh-template /root/.zshrc 
-RUN sed -i 's/^plugins=.*/plugins=(git sudo colorize command-not-found)/' /root/.zshrc \
- && sed -i 's/^ZSH_THEME=.*/ZSH_THEME="custom"/' /root/.zshrc 
-
-RUN cd ~/.oh-my-zsh/themes/ && wget https://raw.githubusercontent.com/BuilderZac/omz-custom/refs/heads/main/custom.zsh-theme 
+RUN cp /root/.oh-my-zsh/templates/zshrc.zsh-template /root/.zshrc && \
+  sed -i 's/^plugins=.*/plugins=(git sudo colorize command-not-found)/' /root/.zshrc && \
+  sed -i 's/^ZSH_THEME=.*/ZSH_THEME="custom"/' /root/.zshrc && \
+  cd ~/.oh-my-zsh/themes/ \
+  && wget https://raw.githubusercontent.com/BuilderZac/omz-custom/refs/heads/main/custom.zsh-theme 
 
 RUN set -eux; \
     sed -i 's/%n@%m"/%n@%m VM"/' "/root/.oh-my-zsh/themes/custom.zsh-theme"
@@ -236,9 +228,6 @@ RUN python --version && \
 
 # Set the default command to run when the container starts
 RUN touch ~/.hushlogin 
-
-# Remove the FALSE harvester
-RUN rm /bin/theharvester 
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
