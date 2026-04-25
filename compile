@@ -4,16 +4,21 @@
 docker images --format '{{.Repository}}:{{.Tag}} {{.ID}}' | grep "^cyberops:" | awk '{print $2}' | xargs -r docker rmi
 
 CACHE_ARG=""
-while getopts "c" opt; do
+DEBUG=""
+while getopts "cd" opt; do
    case $opt in
       c)
          CACHE_ARG="--no-cache"
       ;;
-    *)
+      d)
+         DEBUG="--debug"
       ;;
-  esac
+      *)
+         ;;
+   esac
 done
 shift $((OPTIND -1))
 
 # Build the new image
-docker build $CACHE_ARG -t cyberops .
+docker $DEBUG build $CACHE_ARG -t cyberops .
+
